@@ -11,10 +11,16 @@ namespace CoffeeMugTask.API.Data
         }
 
         public DbSet<ProductModel> Products { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // Fluent API
+            
+            modelBuilder.Entity<ProductModel>()
+                        .Property(p => p.Price)
+                        .HasColumnType("decimal(18,2)");
         }
     }
 }
