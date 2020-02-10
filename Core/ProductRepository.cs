@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoffeeMugTask.API.Data;
 using CoffeeMugTask.API.Models;
 
 namespace CoffeeMugTask.API.Core
 {
     public class ProductRepository : IProductRepository
     {
+        public ProductRepository(DataContext dataContext)
+        {
+            
+        }
         public int CrateProduct(ProductModel product)
         {
             throw new System.NotImplementedException();
