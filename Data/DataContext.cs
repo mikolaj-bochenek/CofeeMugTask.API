@@ -1,3 +1,4 @@
+using CoffeeMugTask.API.DTOs;
 using CoffeeMugTask.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,19 @@ namespace CoffeeMugTask.API.Data
             
             modelBuilder.Entity<ProductModel>()
                         .Property(p => p.Price)
+                        .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<ProductForCreateDTO>()
+                        .HasNoKey();
+                        
+            modelBuilder.Entity<ProductForCreateDTO>()
+                        .Property(p => p.Name)
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+            modelBuilder.Entity<ProductForCreateDTO>()
+                        .Property(p => p.Price)
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
         }
     }
