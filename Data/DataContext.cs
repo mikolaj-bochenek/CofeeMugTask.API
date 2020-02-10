@@ -1,3 +1,4 @@
+using CoffeeMugTask.API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeMugTask.API.Data
@@ -9,6 +10,8 @@ namespace CoffeeMugTask.API.Data
 
         }
 
+        public DbSet<ProductModel> Products { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Fluent API
