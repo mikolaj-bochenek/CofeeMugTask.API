@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CoffeeMugTask.API.Data;
 using CoffeeMugTask.API.Models;
@@ -8,25 +9,30 @@ namespace CoffeeMugTask.API.Core
 {
     public class ProductRepository : IProductRepository
     {
-        public ProductRepository(DataContext dataContext) : base(dataContext) {}
+        private readonly DataContext _dataContext;
+        public ProductRepository(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
         public int CrateProduct(ProductModel product)
         {
-            throw new System.NotImplementedException();
+            _dataContext.Products.Add(product);
+            return product.Id;
         }
 
-        public Task<IEnumerable<ProductModel>> GetAllAsync()
+        public async Task<IEnumerable<ProductModel>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _dataContext.Products.OrderByDescending(p => p.Price).ToListAsync();
         }
 
-        public Task<ProductModel> GetOneAsync(int productId)
+        public async Task<ProductModel> GetOneAsync(int productId)
         {
-            throw new System.NotImplementedException();
+            return await _dataContext.Products.Where(p => p.Id == productId).FirstOrDefaultAsync();
         }
 
         public void RemoveProduct(ProductModel product)
         {
-            throw new System.NotImplementedException();
+            _dataContext.Products.Remove(product);
         }
     }
 }
