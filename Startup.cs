@@ -26,6 +26,8 @@ namespace CoffeeMugTask.API
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_CORSPolicy";
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -37,18 +39,25 @@ namespace CoffeeMugTask.API
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
               
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyOrigin() 
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                });
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            // IoC Container - Autofac
-            // var builder = new ContainerBuilder();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
             builder.RegisterType<Mapper>().As<IMapper>();
-            // builder.Populate(services);
-            // var applicationContainer = builder.Build();
-            // return new AutofacServiceProvider(applicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,16 +68,18 @@ namespace CoffeeMugTask.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+                 {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}").RequireCors(MyAllowSpecificOrigins);
+                });
         }
     }
 }
