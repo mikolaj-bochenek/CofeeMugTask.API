@@ -27,7 +27,7 @@ namespace CoffeeMugTask.API
         }
 
         readonly string MyAllowSpecificOrigins = "_CORSPolicy";
-        
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -78,7 +78,7 @@ namespace CoffeeMugTask.API
                  {
                     endpoints.MapControllerRoute(
                         name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}").RequireCors(MyAllowSpecificOrigins);
+                        pattern: "{controller}/{action}/{id?}").RequireCors(MyAllowSpecificOrigins);
                 });
         }
     }
