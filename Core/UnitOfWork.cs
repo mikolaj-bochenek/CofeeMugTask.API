@@ -14,6 +14,7 @@ namespace CoffeeMugTask.API.Core
             
         }
         public IProductRepository Products { get; private set; }
+        
         public async Task<bool> SaveAllAsync()
         {
             return await _dataContext.SaveChangesAsync() > 0;
