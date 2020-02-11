@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoffeeMugTask.API.Controllers
 {
     // localhost:5000/api/v1/product
-    [Route("api/v1/product")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
