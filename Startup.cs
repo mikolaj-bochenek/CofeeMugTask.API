@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using CoffeeMugTask.API.Core;
 using CoffeeMugTask.API.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,8 +35,20 @@ namespace CoffeeMugTask.API
 
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                
+              
             services.AddAutoMapper(typeof(Startup));
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // IoC Container - Autofac
+            // var builder = new ContainerBuilder();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<Mapper>().As<IMapper>();
+            // builder.Populate(services);
+            // var applicationContainer = builder.Build();
+            // return new AutofacServiceProvider(applicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
