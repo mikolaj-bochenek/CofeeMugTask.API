@@ -6,7 +6,7 @@ Hello! 👋 This is a job interview task written in C# and ASP.NET Core 3.0
 
 1. Clone this repository
 2. Update database (sqlserver) using dotnet CLI in project folder - dotnet ef database update
-3. The run application - dotnet run
+3. Then run the application - dotnet run
 4. API will start up on http://localhost:5000
 5. Use an HTTP client like Postman to test API 💰
 
