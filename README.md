@@ -1,6 +1,6 @@
 ## Getting Started
 
-Hello! 👋 This is a job interview task written in C# and ASP.NET Core 3.0
+Hello! 👋 This is a recruitment task written in C# and ASP.NET Core 3.0
 
 ### Running Application
 
