@@ -35,20 +35,9 @@ namespace CoffeeMugTask.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery]ProductParams planParams)
         {
-            var products = await _unitOfWork.Products.GetAllAsync();
-
-            if (products.Count() == 0)
-                return BadRequest("BadRequest: Products cannot be found");
-            
-            return Ok(products);
-        }
-
-        [HttpGet("params")]
-        public async Task<IActionResult> GetAllPlansAsync([FromQuery]ProductParams planParams)
-        {
-            var products = await _unitOfWork.Products.GetAllParametedAsync(planParams);
+            var products = await _unitOfWork.Products.GetAllAsync(planParams);
 
             if (products.Count == 0)
                 return BadRequest("BadRequest: Products cannot be found");
