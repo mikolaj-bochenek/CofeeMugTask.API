@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CoffeeMugTask.API.Core;
 using CoffeeMugTask.API.DTOs;
+using CoffeeMugTask.API.Helpers;
 using CoffeeMugTask.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,19 @@ namespace CoffeeMugTask.API.Controllers
             if (products.Count() == 0)
                 return BadRequest("BadRequest: Products cannot be found");
             
+            return Ok(products);
+        }
+
+        [HttpGet("params")]
+        public async Task<IActionResult> GetAllPlansAsync([FromQuery]ProductParams planParams)
+        {
+            var products = await _unitOfWork.Products.GetAllParametedAsync(planParams);
+
+            if (products.Count == 0)
+                return BadRequest("BadRequest: Products cannot be found");
+
+            Response.AddPagination(products.CurrentPage, products.PageSize, products.TotalItemsCount, products.TotalPagesCount);
+
             return Ok(products);
         }
 

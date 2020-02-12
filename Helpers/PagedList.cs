@@ -23,7 +23,7 @@ namespace CoffeeMugTask.API.Helpers
             this.AddRange(items);
         }
 
-        public static async Task<PagedList<T>> CreateListAsync(IQueryable<T> source, int pageNumber, int pageSize)
+        public static async Task<PagedList<T>> CreateListAsync(IQueryable<T> source, int pageSize, int pageNumber)
         {
             var totalItemsCount = await source.CountAsync();
             var items = await source.Skip((pageNumber-1) * pageSize).Take(pageSize).ToListAsync();
