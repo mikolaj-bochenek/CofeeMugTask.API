@@ -21,12 +21,7 @@ namespace CoffeeMugTask.API.Core
             return product.Id;
         }
 
-        public async Task<IEnumerable<ProductModel>> GetAllAsync()
-        {
-            return await _dataContext.Products.OrderByDescending(p => p.Price).ToListAsync();
-        }
-
-        public async Task<PagedList<ProductModel>> GetAllParametedAsync(ProductParams productParams)
+        public async Task<PagedList<ProductModel>> GetAllAsync(ProductParams productParams)
         {
             var products = _dataContext.Products.OrderBy(p => p.Id);
 
